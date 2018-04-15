@@ -20,14 +20,15 @@ router.get('/', async (req, res) => {
   });
 });
 
-router.get('/:userName', async (req, res) => {
-  console.log('req.params.userName :', req.params.userName);
+router.get('/:username', async (req, res) => {
   httpRequest({
     ...defaultModel,
-    path: req.params.userName,
+    path: req.params.username,
   }, (result) => {
     return result ? res.status(200).json(result) : res.status(400).send({ success: false });
   });
 });
+
+// TO DO : create route for /users/:username/orgs to get list of  organizations of a user
 
 module.exports = router;

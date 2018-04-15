@@ -14,6 +14,9 @@ const defaultModel = {
   json: true,
 };
 
+// TO DO : create route for /organizations (new file?)
+// edit an organisation??
+
 router.get('/', async (req, res) => {
   res.status(200).json({
     success: false, message: '/orgs doesn\'t exist, instead you should use /organizations or /orgs/<login of an organization>',
@@ -21,8 +24,8 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/:orgName', async (req, res) => {
-  httpRequest({ ...defaultModel, path: req.params.orgName }, (result) => {
+router.get('/:org', async (req, res) => {
+  httpRequest({ ...defaultModel, path: req.params.org }, (result) => {
     return result ? res.status(200).json(result) : res.status(400).send(null);
   });
 });

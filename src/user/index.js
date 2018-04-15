@@ -44,4 +44,6 @@ router.patch('/', async (req, res) => {
   });
 });
 
+// TO DO : create route for /user/orgs to get list of your organizations
+
 module.exports = router;
