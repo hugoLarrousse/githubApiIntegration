@@ -16,9 +16,8 @@ const defaultModel = {
 
 
 router.get('/', async (req, res) => {
-  httpRequest(defaultModel, (result) => {
-    return result ? res.status(200).json(result) : res.status(400).send(null);
-  });
+  const result = await httpRequest(defaultModel);
+  return result ? res.status(200).json(result) : res.status(400).send(null);
 });
 
 

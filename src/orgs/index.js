@@ -25,9 +25,8 @@ router.get('/', async (req, res) => {
 
 
 router.get('/:org', async (req, res) => {
-  httpRequest({ ...defaultModel, path: req.params.org }, (result) => {
-    return result ? res.status(200).json(result) : res.status(400).send(null);
-  });
+  const result = await httpRequest({ ...defaultModel, path: req.params.org });
+  return result ? res.status(200).json(result) : res.status(400).send(null);
 });
 
 

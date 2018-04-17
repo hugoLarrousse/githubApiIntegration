@@ -52,9 +52,9 @@ const makeOptions = options => {
   };
 };
 
-const httpRequest = (options, callback) => {
+const httpRequest = (options) => new Promise((resolve) => {
   request(makeOptions(options), (error, response, body) =>
-    callback(isResponseOK(error, response) ? body : null));
-};
+    resolve(isResponseOK(error, response) ? body : null));
+});
 
 exports.httpRequest = httpRequest;
