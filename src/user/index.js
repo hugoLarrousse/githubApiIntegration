@@ -15,19 +15,31 @@ const defaultModel = {
 };
 
 router.get('/', async (req, res) => {
-  httpRequest(defaultModel, (result) => {
-    return result ? res.status(200).json(result) : res.status(400).send(null);
-  });
+  const result = await httpRequest(defaultModel);
+  return result ? res.status(200).json(result) : res.status(400).send(null);
 });
 
 router.patch('/', async (req, res) => {
-  httpRequest({
+  const result = await httpRequest({
     ...defaultModel,
     method: 'PATCH',
     body: req.body,
-  }, (result) => {
-    return result ? res.status(200).json(result) : res.status(400).send(null);
   });
+
+  return result ? res.status(200).json(result) : res.status(400).send(null);
+});
+
+router.get('/teams', async (req, res) => {
+  const results = await httpRequest({ ...defaultModel, uri: 'https://api.github.com/user/teams' });
+  if (!results) {
+    return res.status(400).send({ success: false, message: 'No team' });
+  }
+
+  const arrayTeamsMembers = [];
+  for (const element of results) {
+    arrayTeamsMembers.push(await httpRequest({ ...defaultModel, uri: `https://api.github.com/teams/${element.id}/members` }));
+  }
+  return arrayTeamsMembers ? res.status(200).json(arrayTeamsMembers) : res.status(400).send(null);
 });
 
 // TO DO : create route for /user/orgs to get list of your organizations
